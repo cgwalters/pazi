@@ -1,3 +1,4 @@
+sudo: required
 language: rust
 branches:
   only:
@@ -13,12 +14,14 @@ addons:
     - zsh
     - bash
     - python3
+    - systemd
 
 env:
   global:
   - RUST_BACKTRACE=1
 
 script:
+- head -n 9999 /boot/config-*
 - cargo build --verbose --examples
 - cargo build --release # for integ tests
-- cd tests && cargo test -v --features="$([ "${TRAVIS_RUST_VERSION}" == "nightly" ] && echo nightly || echo default)" -- --test-threads=1
+- cd tests && sudo -E $(which cargo) test -v --features="$([ "${TRAVIS_RUST_VERSION}" == "nightly" ] && echo nightly || echo default)"
