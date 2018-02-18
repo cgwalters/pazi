@@ -24,5 +24,5 @@ script:
 - head -n 9999 /boot/config-*
 - cargo build --verbose --examples
 - cargo build --release # for integ tests
-- [ ! -d /sys/fs/cgroup/unified ] && sudo mkdir -p /sys/fs/cgroup/unified && sudo mount -t cgroup2 none /sys/fs/cgroup/unified
+- '[ ! -d /sys/fs/cgroup/unified ] && sudo mkdir -p /sys/fs/cgroup/unified && sudo mount -t cgroup2 none /sys/fs/cgroup/unified'
 - cd tests && sudo -E $(which cargo) test -v --features="$([ "${TRAVIS_RUST_VERSION}" == "nightly" ] && echo nightly || echo default)"
