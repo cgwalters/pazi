@@ -135,7 +135,7 @@ impl TestShell {
 
     fn new_internal(cmd: shells::ShellCmd, ps1: &str, cgroup: Option<&str>) -> Self {
         let mut cgpath = None;
-        let mut cgcmd = if let Some(cg) = cgroup {
+        if let Some(cg) = cgroup {
             if unsafe { libc::geteuid() } != 0 {
                 panic!("cgroup pid tracking requires root");
             }
